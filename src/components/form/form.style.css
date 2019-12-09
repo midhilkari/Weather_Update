@@ -4,8 +4,8 @@ form{
 
 form input[name="city"],
 form input[name="country"]{
-    background-color: transparent;
-    color: white;
+    background-color: #ffc107;
+    color: #212529;
     border-bottom: 2px solid whitesmoke;
     border-radius: 0;
     border: 0;
@@ -13,10 +13,10 @@ form input[name="country"]{
 }
 
 form input:focus{
-    background-color: transparent!important;
+    background-color: ffc107!important;
     box-shadow: none !important;
 }
 
 form input.container{
-    color:white !important
+    color:#212529 !important
 }

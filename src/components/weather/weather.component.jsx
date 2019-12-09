@@ -1,12 +1,14 @@
 import React from 'react'
-//import App from '../App';
+import App from '../../components/app/App'
 import { func } from 'prop-types';
 
 const Weather = (props) => {
     console.log({props})
     return(
         <div className="container">
-            <div className="cards pt-4">
+             <h1 className="py-4">WEATHER FORCAST</h1>
+            <div className="cards pt-4" >
+               
                 <h1>
                     {props.city}
                 </h1>

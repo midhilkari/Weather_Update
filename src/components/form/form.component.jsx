@@ -22,10 +22,11 @@ const Form = props => {
     );
 }
 
+//function to handle invalid inputs
 function error(){
     return(
         <div className="alert alert-danger mx-5" role="alert">
-            Please enter correct City and Country!!
+            Please re-enter correct City and Country!!
         </div>
     );
 }
