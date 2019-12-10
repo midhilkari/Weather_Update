@@ -19,7 +19,7 @@ class App extends React.Component{
       celsius: undefined,
       temp_max: undefined,
       temp_min: undefined,
-      weatherState: undefined,
+      weather: undefined,
       description : "",
       error : false,
       errorCity:false
@@ -34,13 +34,13 @@ class App extends React.Component{
       Atmosphere:"wi-fog",
       Clear:"wi-day-sunny",
       Clouds:"wi-day-fog",
+    }; 
+
+    this.weatherBackground = {
+      Smoke:"../../assets/img1.jpg",
     };
-
-    this.weatherState={
-      haze:"../../assets/img2.jpg"
-    }
   }
-
+  
   //synchronously calling weather api
   getWeather = async(e)=>{
 
@@ -53,6 +53,7 @@ class App extends React.Component{
 
     //checking if city and country are entered
     if(city && country){
+      this.setState({error:false});
       console.log("calling api")
       const api_call = await fetch('http://api.openweathermap.org/data/2.5/find/?q='+city+','+country+'&appid=62a01dc6786ac94ea6ffb947cab0d995');
       console.log("fetched API response")
@@ -61,9 +62,10 @@ class App extends React.Component{
       //checking for valid response - if not valid return error message
       const responseCount = response.count;
       console.log({responseCount})
-      if(responseCount!=0){
+      if(responseCount!==0){
         const weatherIcon = await this.get_weatherIcon(response.list[0].weather[0].id);
         console.log({weatherIcon})
+        const weather = await this.set_weatherBackground(response.list[0].weather[0].main);
         this.setState({
           city:response.list[0].name + ' '+response.list[0].sys.country,
           celsius: this.calCelsius(response.list[0].main.temp),
@@ -71,7 +73,8 @@ class App extends React.Component{
           temp_min: this.calCelsius(response.list[0].main.temp_min),
           description: response.list[0].weather[0].description,
           icon: weatherIcon,
-          //weatherState:this.setWeatherBackground(response.list[0].weather[0].main)
+          weatherState: this.weatherBackground,
+          error:this.setState({error:false})
         });
         //console.log("Weather condition: ",response.list[0].weather[0].main)
         //console.log(setWeatherBackground)
@@ -83,8 +86,30 @@ class App extends React.Component{
     }
   }
 
-  
+  //function to set dynamic background according to the weather condition
+  set_weatherBackground(weather){
+    let weatherBackground = null;
+    console.log({weather})
+    switch(true){
+      case weather ==="Smoke":
+        console.log("It is Smoke!")
+        weatherBackground = this.weatherBackgrounf.Smoke
+      /*return (
+        <div style={{
+          backgroundImage: 'url("../../assets/img1.jpg")',
+          width: '300px'
+        }}></div>
+      )*/
+      break;
+      case weather === "Clouds":
+      console.log("It is clouds")
+      break;
+      default:
+      console.log("not received")
 
+    }
+  }
+  
   //function to convert temparature into celsius
   calCelsius(temp){
     console.log("Received temparature in kelvins");
